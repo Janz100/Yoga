@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Signup</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: url('/images/Yoga.webp') no-repeat center center/cover;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: brightness(0.5);
+      color: #ffffff;
+    }
+
+    .container {
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      width: 90%;
+      max-width: 450px;
+      text-align: center;
+    }
+ .form-box h2 {
+      margin: 20px 0;
+      font-size: 20px;
+      line-height: 1.5;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    select {
+      padding: 12px 15px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    .submit-btn {
+      padding: 12px;
+      background-color: #7fc8a9;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+       transition: background-color 0.3s ease;
+    }
+
+    .submit-btn:hover {
+      background-color: #60a98b;
+    }
+
+    .link-center {
+  text-align: center;
+  margin-top: 15px;
+}
+    .link-center a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 14px;
+  display: inline-block;
+}
+
+.link-center a:hover {
+  text-decoration: underline;
+}
+.underline-link {
+  color: #ffffff;
+  text-decoration: underline;
+  font-size: 14px;
+}
+
+.underline-link:hover {
+  text-decoration: none; /* Optional: removes underline on hover */
+}
+ @media (max-width: 600px) {
+      .container {
+        padding: 25px;
+      }
+
+      .form-box h2 {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="form-box">
+      <h2>Signup</h2>
+      <% if (message) { %><p><%= message %></p><% } %>
+      <form action="/signup" method="POST">
+        <input type="text" name="name" placeholder="Full Name" required />
+        <input type="email" name="email" placeholder="Email" required />
+        <input type="password" name="password" placeholder="Password" required />
+        <select name="role">
+          <option value="user">User</option>
+          <option value="admin">Admin</option>
+        </select>
+        <button type="submit" class="submit-btn">Sign Up</button>
+      </form>
+      <div class="link-center">
+  Already have an account?  <a href="/login" class="underline-link">Login here</a>
+</div>
+ </div>
+  </div>
+</body>
+</html>
+
+

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Instructors</title>
+  <link rel="stylesheet" href="/css/instructor.css">
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="navbar">
+  <div class="logo">Yoga Master</div>
+  <ul class="nav-links">
+    <li><a href="/index">Home</a></li>
+    <li><a href="/instructors">Instructors</a></li>
+    <li><a href="/logout">Logout</a></li>
+  </ul>
+</nav>
+
+<!-- Instructor Card -->
+<section class="instructor-section">
+  <h1>Instructor</h1>
+  <p>Book your session</p>
+
+  <div class="instructor-card">
+    <img src="/images/instructor.png" alt="Instructor">
+    <div class="instructor-info">
+      <h3>Tshering Yangchen</h3>
+      <p>Basic Yoga</p>
+      <p>Experience: 8 years</p>
+      <p>Availability: Morning/Evening</p>
+      <button onclick="openForm()">Book Session</button>
+    </div>
+  </div>
+</section>
+
+<!-- Booking Form Modal -->
+<div class="modal" id="bookingModal">
+  <div class="modal-content">
+    <form id="bookingForm" method="POST">
+      <h2>Book Session</h2>
+
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Email Address" required>
+      <input type="tel" name="phone" placeholder="Phone Number" required>
+      <input type="date" name="date" required>
+
+      <select name="time" required>
+        <option value="">Preferred Time</option>
+        <option>Morning</option>
+        <option>Evening</option>
+      </select>
+
+      <select name="type" required>
+        <option value="">Yoga Type</option>
+        <option>Super Brain Yoga</option>
+        <option>Basic Yoga</option>
+        <option>Advanced</option>
+      </select>
+
+      <textarea name="goals" placeholder="Your Goals"></textarea>
+
+      <div class="form-actions">
+        <button type="button" onclick="closeForm()">Cancel</button>
+        <button type="submit">Book Session</button>
+      </div>
+
+      <p id="successMsg" style="color: green; display: none;">Booking Successful!</p>
+    </form>
+  </div>
+</div>
+
+<!-- Bookings List -->
+<section id="bookingList">
+  <h2>Your Bookings</h2>
+  <div id="bookingsContainer"></div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-col">
+    <h4>Yoga Master</h4>
+    <p>Your journey to inner peace starts here.</p>
+  </div>
+  <div class="footer-col">  
+    <h4>Quick Links</h4>
+    <ul>
+      <li><a href="#">home</a></li>
+      <li><a href="#">Instructor</a></li>
+    </ul>
+  </div>  
+  <div class="footer-col">
+    <h4>Contact Us</h4>
+    <p>Sherubtse College<br>Kanglung, Trashigang<br>yogamaster@gmail.com<br>+975 17450301</p>
+  </div>
+  <div class="footer-col">
+    <h4>Follow Us</h4>
+    <a href="https://www.facebook.com/SherubtseMediaSociety" target="_blank">
+      <img src="/images/facebook.png" alt="Facebook" class="social-icon">
+    </a>
+    <a href="https://www.tiktok.com/@smsuo875677?lang=en" target="_blank">
+      <img src="/images/tiktok.png" alt="TikTok" class="social-icon">
+    </a>
+    <a href="https://www.youtube.com/@SherubtseMediaSociety" target="_blank">
+      <img src="/images/youtube.png" alt="YouTube" class="social-icon youtube-icon">
+    </a>
+  </div>
+</footer>
+
+<!-- JavaScript -->
+<script>
+  function openForm() {
+    document.getElementById("bookingModal").style.display = "block";
+  }
+
+  function closeForm() {
+    document.getElementById("bookingModal").style.display = "none";
+    document.getElementById("bookingForm").reset();
+    delete document.getElementById("bookingForm").dataset.id;
+  }
+
+  async function fetchBookings() {
+    const res = await fetch('/bookings');
+    const bookings = await res.json();
+    const container = document.getElementById('bookingsContainer');
+    container.innerHTML = bookings.map(b => `
+      <div class="booking-item">
+        <p>${b.name} - ${b.date} - ${b.time}</p>
+        <button onclick='editBooking(${JSON.stringify(b)})'>Edit</button>
+        <button onclick='deleteBooking("${b.id}")'>Delete</button>
+      </div>
+    `).join('');
+  }
+
+  function editBooking(data) {
+    openForm();
+    const form = document.getElementById("bookingForm");
+    form.name.value = data.name;
+    form.email.value = data.email;
+    form.phone.value = data.phone;
+    form.date.value = data.date;
+    form.time.value = data.time;
+    form.type.value = data.type;
+    form.goals.value = data.goals;
+    form.dataset.id = data.id;
+  }
+
+  async function deleteBooking(id) {
+    if (confirm("Are you sure you want to delete this booking?")) {
+      const res = await fetch(`/book/${id}`, { method: 'DELETE' });
+      if (res.ok) {
+        alert("Deleted successfully");
+        fetchBookings();
+      }
+    }
+  }
+
+  document.getElementById("bookingForm").addEventListener("submit", async function (e) {
+    e.preventDefault();
+    const form = e.target;
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData);
+    const id = form.dataset.id;
+    const url = id ? `/book/${id}` : '/book';
+    const method = id ? 'PUT' : 'POST';
+
+    const res = await fetch(url, {
+      method,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+
+    if (res.ok) {
+      document.getElementById("successMsg").style.display = "block";
+      form.reset();
+      delete form.dataset.id;
+      closeForm();
+      fetchBookings();
+    } else {
+      alert("Something went wrong. Try again.");
+    }
+  });
+
+  window.onload = fetchBookings;
+</script>
+
+</body>
+</html>

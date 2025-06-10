@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yoga Master - Sessions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+    </style>
+    <link rel="stylesheet" href="css/session.css" />
+
+  </head>
+  <body class="bg-[#fdf8f5]">
+    <div class="flex h-screen">
+      <!-- Sidebar -->
+      <aside class="w-1/5 bg-white p-4 border-r relative">
+        <h2 class="text-lg font-bold mb-6">Yoga Master</h2>
+        <nav class="space-y-4">
+          <a
+            href="bookings.html"
+            class="block text-sm text-gray-700 hover:text-purple-600"
+          >
+            Bookings
+          </a>
+          <a
+            href="sessions.html"
+            class="block text-sm text-purple-600 font-semibold"
+          >
+        Sessions
+          </a>
+        </nav>
+        <div class="absolute bottom-4 left-4 text-xs text-gray-600">
+          <div class="font-medium">Tshering Yangchen</div>
+          <div>Yoga Instructor</div>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="flex-1 p-6 overflow-auto">
+        <div class="flex justify-between items-center mb-6">
+          <h3 class="text-xl font-semibold">Sessions</h3>
+          <button
+            class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded flex items-center gap-2"
+          >
+            <span>＋</span> New Session
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Basic Yoga Card -->
+          <div class="bg-white rounded shadow">
+            <img
+              src="images/basic-yoga.png"
+              alt="Basic Yoga"
+              class="w-full h-48 object-cover rounded-t"
+            />
+            <div class="p-4">
+              <h4 class="font-semibold text-base mb-1">Basic Yoga</h4>
+              <p class="text-sm text-gray-600 mb-3">
+                An ancient practice that involves physical poses,
+                concentration, and deep breathing. Promote endurance, strength,
+                calmness, flexibility, and well-being.
+              </p>
+              <div class="flex gap-2">
+                <button
+                  class="bg-blue-500 text-white px-3 py-1 text-sm rounded"
+                >
+                  Edit
+                </button>
+                <button
+                  class="bg-red-500 text-white px-3 py-1 text-sm rounded"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Super Brain Yoga Card -->
+          <div class="bg-white rounded shadow">
+            <img
+              src="images/super-brain-yoga.png"
+              alt="Super Brain Yoga"
+              class="w-full h-48 object-cover rounded-t"
+            />
+            <div class="p-4">
+              <h4 class="font-semibold text-base mb-1">Super Brain Yoga</h4>
+              <p class="text-sm text-gray-600 mb-3">
+                Simple squatting exercise that claims to boost the holistic
+                well-being. Uses subtle energy to improve cognitive and academic
+                performance.
+              </p>
+              <div class="flex gap-2">
+                <button
+                  class="bg-blue-500 text-white px-3 py-1 text-sm rounded"
+                >
+                  Edit
+                </button>
+                <button
+                  class="bg-red-500 text-white px-3 py-1 text-sm rounded"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
